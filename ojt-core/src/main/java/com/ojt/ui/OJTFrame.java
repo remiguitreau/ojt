@@ -3,7 +3,12 @@
  */
 package com.ojt.ui;
 
-import java.awt.Color;
+import org.apache.log4j.Logger;
+
+import com.ojt.OjtConstants;
+import com.ojt.balance.BalanceDriver;
+import com.ojt.export.DefaultModelsFileExporter;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -17,12 +22,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-import org.apache.log4j.Logger;
-
-import com.ojt.OjtConstants;
-import com.ojt.balance.BalanceDriver;
-import com.ojt.export.DefaultModelsFileExporter;
-
 /**
  * Fenêtre d'OJT
  * @author Rémi "DwarfConan" Guitreau
@@ -30,144 +29,144 @@ import com.ojt.export.DefaultModelsFileExporter;
  */
 public class OJTFrame extends JFrame {
 
-	// ---------------------------------------------------------
-	// Attributs
-	// ---------------------------------------------------------
-	private final BalanceDriver balanceDriver;
+    // ---------------------------------------------------------
+    // Attributs
+    // ---------------------------------------------------------
+    private final BalanceDriver balanceDriver;
 
-	private final ConfigurationChangedListener configurationChangedListener;
+    private final ConfigurationChangedListener configurationChangedListener;
 
-	private final DefaultModelsFileExporter defaultModelsFileExporter;
+    private final DefaultModelsFileExporter defaultModelsFileExporter;
 
-	private final Logger logger = Logger.getLogger(getClass());
+    private final Logger logger = Logger.getLogger(getClass());
 
-	private OJTMainPanel ojtMainPanel;
+    private OJTMainPanel ojtMainPanel;
 
-	// ---------------------------------------------------------
-	// Constructeur
-	// ---------------------------------------------------------
+    // ---------------------------------------------------------
+    // Constructeur
+    // ---------------------------------------------------------
 
-	public OJTFrame(final BalanceDriver balanceDriver,
-			final ConfigurationChangedListener configurationChangedListener) {
-		super();
-		setTitle("Open Judo Tournament");
-		this.balanceDriver = balanceDriver;
-		this.configurationChangedListener = configurationChangedListener;
-		defaultModelsFileExporter = new DefaultModelsFileExporter();
-		initComponents();
-	}
+    public OJTFrame(final BalanceDriver balanceDriver,
+            final ConfigurationChangedListener configurationChangedListener) {
+        super();
+        setTitle("Open Judo Tournament");
+        this.balanceDriver = balanceDriver;
+        this.configurationChangedListener = configurationChangedListener;
+        defaultModelsFileExporter = new DefaultModelsFileExporter();
+        initComponents();
+    }
 
-	// ---------------------------------------------------------
-	// Accesseurs
-	// ---------------------------------------------------------
-	public BalanceDriver getBalanceDriver() {
-		return balanceDriver;
-	}
+    // ---------------------------------------------------------
+    // Accesseurs
+    // ---------------------------------------------------------
+    public BalanceDriver getBalanceDriver() {
+        return balanceDriver;
+    }
 
-	// ---------------------------------------------------------
-	// Privées
-	// ---------------------------------------------------------
+    // ---------------------------------------------------------
+    // Privées
+    // ---------------------------------------------------------
 
-	private void initComponents() {
-		setIconImage(OjtConstants.OJT_ICON.getImage());
-		initMenu();
-		initMainPanel();
-	}
+    private void initComponents() {
+        setIconImage(OjtConstants.OJT_ICON.getImage());
+        initMenu();
+        initMainPanel();
+    }
 
-	private void initMainPanel() {
-		ojtMainPanel = new OJTMainPanel(this);
-		setContentPane(ojtMainPanel);
-	}
+    private void initMainPanel() {
+        ojtMainPanel = new OJTMainPanel(this);
+        setContentPane(ojtMainPanel);
+    }
 
-	private void initMenu() {
-		final JMenuBar menuBar = new JMenuBar();
-		menuBar.setBackground(OjtUiConstants.OJT_GREEN);
+    private void initMenu() {
+        final JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(OjtUiConstants.OJT_GREEN);
 
-		// --- Menu OJT ---
-		final JMenu ojtMenu = new JMenu("Outils");
-		
-		// Configuration
-		final JMenuItem configurationMenu = new JMenuItem("Configuration");
-		configurationMenu.setBackground(OjtUiConstants.OJT_GREEN);
-		configurationMenu.addActionListener(new ActionListener() {
+        // --- Menu OJT ---
+        final JMenu ojtMenu = new JMenu("Outils");
 
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				displayConfigurationPanel();
-			}
-		});
-		ojtMenu.add(configurationMenu);
+        // Configuration
+        final JMenuItem configurationMenu = new JMenuItem("Configuration");
+        configurationMenu.setBackground(OjtUiConstants.OJT_GREEN);
+        configurationMenu.addActionListener(new ActionListener() {
 
-		// Export des modèles par défaut
-		final JMenuItem defaultModelsExportMenu = new JMenuItem("Entregistrer les modèles par défaut...");
-		defaultModelsExportMenu.setBackground(OjtUiConstants.OJT_GREEN);
-		defaultModelsExportMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                displayConfigurationPanel();
+            }
+        });
+        ojtMenu.add(configurationMenu);
 
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				exportDefaultModels();
-			}
-		});
-		ojtMenu.add(defaultModelsExportMenu);
+        // Export des modèles par défaut
+        final JMenuItem defaultModelsExportMenu = new JMenuItem("Entregistrer les modèles par défaut...");
+        defaultModelsExportMenu.setBackground(OjtUiConstants.OJT_GREEN);
+        defaultModelsExportMenu.addActionListener(new ActionListener() {
 
-		menuBar.add(ojtMenu);
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                exportDefaultModels();
+            }
+        });
+        ojtMenu.add(defaultModelsExportMenu);
 
-		// --- Menu ? ---
-		final JMenu othersMenu = new JMenu("?");
-		// A propos
-		final JMenuItem aboutMenu = new JMenuItem("A propos...");
-		aboutMenu.setBackground(OjtUiConstants.OJT_GREEN);
-		aboutMenu.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				JOptionPane.showMessageDialog(OJTFrame.this, "Programme OJT\nVersion: "
-						+ OjtConstants.VERSION + "\n\n"
-						+ "Site internet: http://ojt.sourceforge.net, powered by sourceforge.net", "Ojt "
-						+ OjtConstants.VERSION, JOptionPane.INFORMATION_MESSAGE, OjtConstants.OJT_LOGO_67x52);
-			}
-		});
-		othersMenu.add(aboutMenu);
+        menuBar.add(ojtMenu);
 
-		menuBar.add(othersMenu);
-		setJMenuBar(menuBar);
-	}
+        // --- Menu ? ---
+        final JMenu othersMenu = new JMenu("?");
+        // A propos
+        final JMenuItem aboutMenu = new JMenuItem("A propos...");
+        aboutMenu.setBackground(OjtUiConstants.OJT_GREEN);
+        aboutMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                JOptionPane.showMessageDialog(OJTFrame.this, "Programme OJT\nVersion: "
+                        + OjtConstants.VERSION + "\n\n"
+                        + "Site internet: https://github.com/remiguitreau/ojt, powered by github.com", "Ojt "
+                        + OjtConstants.VERSION, JOptionPane.INFORMATION_MESSAGE, OjtConstants.OJT_LOGO_67x52);
+            }
+        });
+        othersMenu.add(aboutMenu);
 
-	private void displayConfigurationPanel() {
-		final ConfigurationDialog configurationPanel = new ConfigurationDialog(this);
-		configurationPanel.setSerialPorts(balanceDriver.getAvailablePorts());
-		configurationPanel.addConfigurationListener(configurationChangedListener);
-		configurationPanel.addConfigurationListener(ojtMainPanel);
-		configurationPanel.init();
-	}
+        menuBar.add(othersMenu);
+        setJMenuBar(menuBar);
+    }
 
-	private void exportDefaultModels() {
-		final JFileChooser fileChooser = new JFileChooser(OjtConstants.MODELS_DIRECTORY);
-		fileChooser.setFileFilter(new FileFilter() {
-			@Override
-			public boolean accept(final File f) {
-				return f.isDirectory() || (f.getAbsolutePath().indexOf(".xls") > 0);
-			}
+    private void displayConfigurationPanel() {
+        final ConfigurationDialog configurationPanel = new ConfigurationDialog(this);
+        configurationPanel.setSerialPorts(balanceDriver.getAvailablePorts());
+        configurationPanel.addConfigurationListener(configurationChangedListener);
+        configurationPanel.addConfigurationListener(ojtMainPanel);
+        configurationPanel.init();
+    }
 
-			@Override
-			public String getDescription() {
-				return "xls selection";
-			}
+    private void exportDefaultModels() {
+        final JFileChooser fileChooser = new JFileChooser(OjtConstants.MODELS_DIRECTORY);
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(final File f) {
+                return f.isDirectory() || f.getAbsolutePath().indexOf(".xls") > 0;
+            }
 
-		});
-		fileChooser.showSaveDialog(this);
-		File exportFile = fileChooser.getSelectedFile();
-		if (exportFile != null) {
-			if (!exportFile.getName().endsWith(".xls")) {
-				exportFile = new File(exportFile.getAbsolutePath() + ".xls");
-			}
-			try {
-				defaultModelsFileExporter.exportDefaultModelsFile(exportFile);
-			} catch (final IOException ex) {
-				logger.error("Error occured during default models file export.", ex);
-				JOptionPane.showMessageDialog(this,
-						"Une erreur est survenue lors de la sauvegarde des modèles par défaut.", "OJT",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		}
-	}
+            @Override
+            public String getDescription() {
+                return "xls selection";
+            }
+
+        });
+        fileChooser.showSaveDialog(this);
+        File exportFile = fileChooser.getSelectedFile();
+        if (exportFile != null) {
+            if (!exportFile.getName().endsWith(".xls")) {
+                exportFile = new File(exportFile.getAbsolutePath() + ".xls");
+            }
+            try {
+                defaultModelsFileExporter.exportDefaultModelsFile(exportFile);
+            } catch (final IOException ex) {
+                logger.error("Error occured during default models file export.", ex);
+                JOptionPane.showMessageDialog(this,
+                        "Une erreur est survenue lors de la sauvegarde des modèles par défaut.", "OJT",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 }
