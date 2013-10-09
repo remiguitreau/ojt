@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Configuration de OJT</comment>
+<entry key="OOLaunchCommand">soffice</entry>
+<entry key="SerialPort">COM8</entry>
+<entry key="ExportFromModels">true</entry>
+<entry key="CompetitionCategories">Pré poussins masculins/MALE/PREPOUSSIN;Pré poussins féminines/FEMALE/PREPOUSSIN;Pré poussins/UNKNOWN/PREPOUSSIN;Poussins masculins/MALE/POUSSIN;Poussins féminines/FEMALE/POUSSIN;Poussins/UNKNOWN/POUSSIN;Benjamins/MALE/BENJAMIN;Benjamines/FEMALE/BENJAMIN;Minimes masculins/MALE/MINIME;Minimes féminines/FEMALE/MINIME;Cadets/MALE/CADET;Cadettes/FEMALE/CADET;Juniors masculins/MALE/JUNIOR;Juniors féminines/FEMALE/JUNIOR;Juniors et Séniors masculins/MALE/SENIOR/JUNIOR;Juniors et Séniors féminines/FEMALE/SENIOR/JUNIOR</entry>
+</properties>

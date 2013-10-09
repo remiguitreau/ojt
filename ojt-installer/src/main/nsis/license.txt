@@ -1,0 +1,12 @@
+====================================================
+ OJT - Open Judo Tournament (2010)
+====================================================
+
+This project is powered by SourceForge.net (https://sourceforge.net/).
+OJT is issued under the GNU Lesser General Public License (http://www.gnu.org/copyleft/lesser.html).
+
+OJT includes the following libraries :
+	- JExcelApi which is under GNU LGPL (http://jexcelapi.sourceforge.net/)
+	- Libraries developped by The Apache Software Foundation (http://www.apache.org/)
+	- OpenOffice.org API which is under GNU LGPL v3 (http://www.gnu.org/licenses/lgpl-3.0.html)
+	- Swingx which is under GNU LGPL (http://www.gnu.org/copyleft/lesser.html)

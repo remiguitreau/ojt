@@ -1,0 +1,24 @@
+--------- 2008.09.01 --------
+Sortie de la version 0.5-beta
+- Rajout d'une ligne de code pour chaque colonne afin de pouvoir mettre les
+colonnes dans un ordre différent
+
+--------- 2008.08.12 --------
+Sortie de la version 0.4-beta
+Corrections et améliorations depuis la 0.3-beta:
+- 1964461	Fusion et séparation de groupes
+
+
+--------- 2008.05.22 --------
+Sortie de la version 0.3-beta
+Corrections et améliorations depuis la 0.2-beta:
+- 1964593  	Ne plus limiter la taille des groupe   
+- 1964533	Rapport d'import
+- 1964469  	Erreur lors de la modification de groupes
+- 1964462 	Revoir gestion des groupes/poules
+- 1964460 	Remplacer le logo par du gris clair
+- 1964458 	Revoir la taille des colonnes
+- 1964457 	Feuilles EXCEL pour être en mode paysage 
+- 1964444 	Le lieu de combat n'ai pas pris en compte
+- 1963028 	Plantage lors de l'import XLS
+Voir le détail sur http://sourceforge.net/projects/ojt/

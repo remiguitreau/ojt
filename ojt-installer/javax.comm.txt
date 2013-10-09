@@ -1,0 +1,19 @@
+    * Il faut installer un jdk1.6.0_13 dans /usr/local
+    * Faire un lien : ln -s /usr/local/jdk1.6.0_13/ /usr/local/java
+    * Télécharger comm3.0_u1_linux.zip
+    * L'installer:
+          o copier comm.jar et commtest.jar dans /usr/local/java/jre/lib/ext
+          o copier libLinuxSerialParallel.so dans /usr/local/java/jre/lib/i386
+          o copier javax.comm.properties dans /usr/local/java/jre/lib/ et vérifier qu'il contient: 
+
+driver=com.sun.comm.LinuxDriver
+
+serpath0 = /dev/ttyS0
+serpath1 = /dev/ttyS1
+serpath2 = /dev/ttyS2
+serpath3 = /dev/ttyS3
+serpath4 = /dev/ttyS4
+serpath5 = /dev/ttyS5
+
+parpath0 = /dev/parport0
+parpath1 = /dev/parport1

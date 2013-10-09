@@ -1,0 +1,126 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ojt</groupId>
+	<artifactId>ojt-core</artifactId>
+	<packaging>jar</packaging>
+	<name>Open Judo Tournament - Core module</name>
+	<description>Core module for OJT project</description>	
+	
+	<parent>
+		<groupId>ojt</groupId>
+		<artifactId>ojt-main</artifactId>		
+		<version>1.1.4-SNAPSHOT</version>
+	</parent>
+	
+	<properties>
+		<junit-version>4.4</junit-version>
+		<jxl-version>2.6</jxl-version>
+		<openoffice-version>3.0.0</openoffice-version>
+		<commons-io-version>1.4</commons-io-version>
+        <javaxcomm-version>3.0-u1</javaxcomm-version>
+        <log4j-version>1.2.14</log4j-version>
+        <poi-version>3.7</poi-version>
+        
+         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+	</properties>
+	
+	<developers>		
+		<developer>
+			<id>fmore</id>
+			<name>Fabien More</name>
+			<email>fmore@users.sourceforge.net</email>			
+		</developer>
+		<developer>
+			<id>cart05</id>
+			<name>Cédric Dall'Agnola</name>
+			<email>cart05@users.sourceforge.net</email>			
+		</developer>
+		<developer>
+			<id>dwarfconan</id>
+			<name>Rémi Guitreau</name>
+			<email>dwarfconan@users.sourceforge.net</email>			
+		</developer>
+	</developers>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit-version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.jexcelapi</groupId>
+			<artifactId>jxl</artifactId>
+			<version>${jxl-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>unoil</artifactId>
+			<version>${openoffice-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>jurt</artifactId>
+			<version>${openoffice-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openoffice</groupId>
+			<artifactId>juh</artifactId>
+			<version>${openoffice-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io-version}</version>
+		</dependency>
+		
+		<!-- Javax Comm -->
+        <dependency>
+            <groupId>javax.comm</groupId>
+            <artifactId>comm</artifactId>
+            <version>${javaxcomm-version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>log4j</groupId>
+        	<artifactId>log4j</artifactId>
+        	<version>${log4j-version}</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.swinglabs</groupId>
+        	<artifactId>swingx</artifactId>
+        	<version>0.9.5-2</version>
+        </dependency> 
+        
+        <!-- lecture / ecriture de fichier au format excel-->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi-version}</version>
+		</dependency>
+       
+	</dependencies>
+ 
+	<build>
+		<plugins>		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<!-- <version>2.0.2</version> -->
+				<configuration>					
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+				<inherited>true</inherited>
+			</plugin>
+				
+			<plugin>
+        		<groupId>org.apache.maven.plugins</groupId>
+        		<artifactId>maven-source-plugin</artifactId>
+      		</plugin>
+							
+		</plugins>
+	</build>
+
+</project>
