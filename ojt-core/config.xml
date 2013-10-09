@@ -4,12 +4,13 @@
 <comment>Configuration de OJT</comment>
 <entry key="AddWeighingSaveDirectoryPath">C:\Documents and Settings\fmo.NETCELER\Mes documents\Super Screen Recorder</entry>
 <entry key="SerialPort">Aucun port disponible</entry>
+<entry key="AutoRegistrationMenu">true</entry>
 <entry key="OOLaunchCommand">C:\Program Files\OpenOffice.org 3\program\soffice.exe</entry>
 <entry key="ExportFromModels">true</entry>
 <entry key="GenerateSourceFileMenu">true</entry>
 <entry key="WeighingPost">1</entry>
-<entry key="CompetitionCategories">Pré poussins masculins/MALE/PREPOUSSIN;Pré poussins féminines/FEMALE/PREPOUSSIN;Pré poussins/UNKNOWN/PREPOUSSIN;Poussins masculins/MALE/POUSSIN;Poussins féminines/FEMALE/POUSSIN;Poussins/UNKNOWN/POUSSIN;Benjamins/MALE/BENJAMIN;Benjamines/FEMALE/BENJAMIN;Minimes masculins/MALE/MINIME;Minimes féminines/FEMALE/MINIME;Cadets/MALE/CADET;Cadettes/FEMALE/CADET;Juniors masculins/MALE/JUNIOR;Juniors féminines/FEMALE/JUNIOR;Juniors et Séniors masculins/MALE/SENIOR/JUNIOR;Juniors et Séniors féminines/FEMALE/SENIOR/JUNIOR;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN</entry>
 <entry key="ShowWarnningOnEmptyWeight">true</entry>
+<entry key="CompetitionCategories">Pré poussins masculins/MALE/PREPOUSSIN;Pré poussins féminines/FEMALE/PREPOUSSIN;Pré poussins/UNKNOWN/PREPOUSSIN;Poussins masculins/MALE/POUSSIN;Poussins féminines/FEMALE/POUSSIN;Poussins/UNKNOWN/POUSSIN;Benjamins/MALE/BENJAMIN;Benjamines/FEMALE/BENJAMIN;Minimes masculins/MALE/MINIME;Minimes féminines/FEMALE/MINIME;Cadets/MALE/CADET;Cadettes/FEMALE/CADET;Juniors masculins/MALE/JUNIOR;Juniors féminines/FEMALE/JUNIOR;Juniors et Séniors masculins/MALE/SENIOR/JUNIOR;Juniors et Séniors féminines/FEMALE/SENIOR/JUNIOR;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN;catégorie de test/FEMALE/BENJAMIN</entry>
 <entry key="ModelFilePath"/>
 <entry key="SortMenu">true</entry>
 <entry key="WeighingMenu">true</entry>
