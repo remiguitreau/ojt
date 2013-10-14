@@ -3,19 +3,18 @@
  */
 package com.ojt.process;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
-import com.ojt.Competitor;
-import com.ojt.OJTConfiguration;
+import com.ojt.OjtConstants;
+import com.ojt.dao.CompetitorsDaoFactory;
+import com.ojt.tools.FileNameComposer;
 import com.ojt.ui.AutoRegistrationPanel;
 
-import java.awt.Dimension;
+import java.io.File;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 public class AutoRegistrationStep extends AbstractStep {
@@ -25,6 +24,8 @@ public class AutoRegistrationStep extends AbstractStep {
     private CompetitionDatas competitionDatas;
 
     private final Logger logger = Logger.getLogger(getClass());
+
+    File autoPersistFile = null;
 
     public AutoRegistrationStep() {
         initStepPanel();
@@ -43,8 +44,27 @@ public class AutoRegistrationStep extends AbstractStep {
     public void process(final CompetitionDatas competDatas) {
         this.competitionDatas = competDatas;
         stepPanel.setCompetitionDescriptor(competDatas.getCompetitionDescriptor());
-        stepPanel.setCompetitorsDao(competDatas.getCompetitorsDao());
         stepPanel.setCompetitorsList(competDatas.getCompetitorsDao().retrieveCompetitors());
+        autoPersistFile = new File(new File(OjtConstants.PERSISTANCY_DIRECTORY,
+                FileNameComposer.composeDirectoryName(competDatas.getCompetitionDescriptor())),
+                "autoRegistrationPeristancy."
+                        + FilenameUtils.getExtension(competDatas.getCompetitionFile().getName()));
+        stepPanel.setRegisteredCompetitorsDao(CompetitorsDaoFactory.createCompetitorsDao(autoPersistFile,
+                false));
+        if (!autoPersistFile.exists()) {
+            try {
+                FileUtils.copyURLToFile(
+                        OjtConstants.class.getResource("emptyCompetitionFile."
+                                + FilenameUtils.getExtension(competDatas.getCompetitionFile().getName())),
+                        autoPersistFile);
+            } catch (final Exception ex) {
+                logger.error("Unable to create auto registration persistancy file...", ex);
+
+            }
+        } else {
+            stepPanel.setRegisteredCompetitorList(stepPanel.getRegisteredCompetitorsDao().retrieveCompetitors());
+        }
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -58,40 +78,16 @@ public class AutoRegistrationStep extends AbstractStep {
 
     @Override
     public boolean finalizeStep() {
-        // 30.10.2009 (FMo) : ajout d'une prop de config pour savoir si on
-        // affiche le dialogue ou pas
-        if (OJTConfiguration.getInstance().getPropertyAsBoolean(OJTConfiguration.SHOW_WARN_ON_EMPTY_WEIGHT,
-                true)) {
-            if (!stepPanel.getUnvalidCompetitors().isEmpty()) {
-                switch (JOptionPane.showOptionDialog(null,
-                        "Tous les compétiteurs n'ont pas leur poids renseigné", "OJT",
-                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {
-                                "Voir les compétiteurs sans poids", "Annuler", "Poursuivre quand même" },
-                        "Poursuivre quand même")) {
-                    case 0:
-                        final JList list = new JList();
-                        final DefaultListModel model = new DefaultListModel();
-                        for (final Competitor comp : stepPanel.getUnvalidCompetitors()) {
-                            model.addElement(comp.getDisplayName() + " [" + comp.getClub() + "]");
-                        }
-                        list.setModel(model);
-                        final JScrollPane scrollPane = new JScrollPane();
-                        scrollPane.setViewportView(list);
-                        scrollPane.setPreferredSize(new Dimension(500, 500));
-                        JOptionPane.showMessageDialog(null, scrollPane, "Compétiteurs sans poids",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        return finalizeStep();
-                    case 1:
-                        return false;
-                    case 2:
-                        competitionDatas.setValidCompetitors(stepPanel.getValidCompetitors());
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        }
         competitionDatas.setValidCompetitors(stepPanel.getValidCompetitors());
+        competitionDatas.setWeighingPost("auto" + competitionDatas.getWeighingPost());
+        if (autoPersistFile != null && autoPersistFile.exists()) {
+            try {
+                FileUtils.copyFile(autoPersistFile, competitionDatas.getCompetitionFile());
+            } catch (final Exception ex) {
+                logger.error("Error while saving persistancy to competitio file.", ex);
+            }
+            autoPersistFile.delete();
+        }
         return true;
     }
 

@@ -48,8 +48,6 @@ public final class AutoRegistrationPanel extends JPanel {
 
     private CompetitorList competitorsList = new CompetitorList();
 
-    private CompetitorsDao competitorsDao = null;
-
     private final Logger logger = Logger.getLogger(getClass());
 
     private CompetitionDescriptor competitionDescriptor;
@@ -63,6 +61,8 @@ public final class AutoRegistrationPanel extends JPanel {
     private StringBuilder buf = new StringBuilder();
 
     private Clip clip = null;
+
+    private CompetitorsDao registeredCompetitorsDao;
 
     public AutoRegistrationPanel() {
         buildGui();
@@ -123,7 +123,7 @@ public final class AutoRegistrationPanel extends JPanel {
 
     private void updateCompetitorsTable() {
         competitorTable.setModel(new CompetitorTableModel(competitionDescriptor, registeredCompetitorsList,
-                competitorsDao, new CompetitorWeightListener() {
+                registeredCompetitorsDao, new CompetitorWeightListener() {
                     @Override
                     public void newWeightEntered() {
 
@@ -182,6 +182,7 @@ public final class AutoRegistrationPanel extends JPanel {
             logger.info("Competitor already registered: " + competitor);
         } else {
             registeredCompetitorsList.add(competitor);
+            registeredCompetitorsDao.createCompetitor(competitor);
             playClip(OjtConstants.class.getResource("valid_registration.wav"));
         }
         updateCompetitorsTable();
@@ -218,6 +219,7 @@ public final class AutoRegistrationPanel extends JPanel {
      */
     public void setRegisteredCompetitorList(final CompetitorList competitorList) {
         this.registeredCompetitorsList = competitorList;
+        updateCompetitorsTable();
     }
 
     public void setCompetitorsList(final CompetitorList competitorsList) {
@@ -264,11 +266,12 @@ public final class AutoRegistrationPanel extends JPanel {
         return unvalidCompetitors;
     }
 
-    /**
-     * @param competitorsDao the competitorsDao to set
-     */
-    public void setCompetitorsDao(final CompetitorsDao competitorsDao) {
-        this.competitorsDao = competitorsDao;
+    public void setRegisteredCompetitorsDao(final CompetitorsDao registeredCompetitorsDao) {
+        this.registeredCompetitorsDao = registeredCompetitorsDao;
+    }
+
+    public CompetitorsDao getRegisteredCompetitorsDao() {
+        return registeredCompetitorsDao;
     }
 
 }
