@@ -2,7 +2,7 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment>Configuration de OJT</comment>
-<entry key="AddWeighingSaveDirectoryPath">C:\Documents and Settings\fmo.NETCELER\Mes documents\Super Screen Recorder</entry>
+<entry key="AddWeighingSaveDirectoryPath">target</entry>
 <entry key="SerialPort">Aucun port disponible</entry>
 <entry key="AutoRegistrationMenu">true</entry>
 <entry key="OOLaunchCommand">C:\Program Files\OpenOffice.org 3\program\soffice.exe</entry>
