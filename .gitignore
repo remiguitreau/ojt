@@ -4,3 +4,4 @@ target/
 .settings
 log
 datas
+ojt-installer/target_install/OJT-install*
