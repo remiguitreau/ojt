@@ -11,13 +11,14 @@ import com.ojt.CompetitorList;
 import com.ojt.OjtConstants;
 import com.ojt.dao.CompetitorsDao;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -60,6 +61,8 @@ public final class AutoRegistrationPanel extends JPanel {
     private JLabel competitorsRegisteredNumberLabel;
 
     private StringBuilder buf = new StringBuilder();
+
+    private Clip clip = null;
 
     public AutoRegistrationPanel() {
         buildGui();
@@ -143,28 +146,43 @@ public final class AutoRegistrationPanel extends JPanel {
         }
     }
 
+    private void stopPlayingClip() {
+        if (clip != null) {
+            clip.stop();
+            clip = null;
+        }
+    }
+
+    private void playClip(final URL clipUrl) {
+        try {
+            stopPlayingClip();
+            final AudioInputStream audio = AudioSystem.getAudioInputStream(clipUrl);
+            clip = AudioSystem.getClip();
+            clip.open(audio);
+            clip.start();
+            clip.loop(5);
+            clip.stop();
+            // clip.setMicrosecondPosition(123456789L);
+            clip.start();
+        } catch (final Exception ex) {
+            logger.warn("Error while playing sound '" + clipUrl + "'", ex);
+        }
+    }
+
     private void processRegistration(final String competitorId) {
         final Competitor competitor = retrieveCompetitorByLicenseCode(competitorId);
         if (competitor == null) {
-            final AudioClip ac = Applet.newAudioClip(OjtConstants.class.getResource("unknown_license.wav"));
-            ac.play();
+            playClip(OjtConstants.class.getResource("unknown_license.wav"));
             return;
         } else if (competitor.getWeight() == null) {
-            final AudioClip ac = Applet.newAudioClip(OjtConstants.class.getResource("not_registered_weight.wav"));
-            ac.play();
+            playClip(OjtConstants.class.getResource("not_registered_weight.wav"));
             return;
         }
         if (registeredCompetitorsList.contains(competitor)) {
             logger.info("Competitor already registered: " + competitor);
         } else {
             registeredCompetitorsList.add(competitor);
-            Toolkit.getDefaultToolkit().beep();
-            try {
-                Thread.sleep(100);
-            } catch (final Exception ex) {
-                // NOP
-            }
-            Toolkit.getDefaultToolkit().beep();
+            playClip(OjtConstants.class.getResource("valid_registration.wav"));
         }
         updateCompetitorsTable();
     }
