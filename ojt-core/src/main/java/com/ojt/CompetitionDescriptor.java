@@ -10,7 +10,7 @@ public class CompetitionDescriptor {
 
     private String fightTime = "2 min";
 
-    private CompetitionCategory category = null;
+    private CompetitionCategory category = CompetitionCategory.UNKNOWN_CATEGORY;
 
     public String getDate() {
         return date;

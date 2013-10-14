@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 public interface OjtConstants {
     boolean DEBUG = true;
 
-    String VERSION = "1.1.3";
+    String VERSION = "1.1.4-SNAPSHOT";
 
     final int MAX_COMPETITOR_PER_GROUP = 16;
 
