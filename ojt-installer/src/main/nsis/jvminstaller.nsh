@@ -34,14 +34,12 @@
 		SetOutPath "$INSTDIR\java"
 		SetOverwrite on
 		DetailPrint "Extracting JVM installer : $TEMP/jvminstaller.exe"
-		LogText "Extracting JVM installer : $TEMP/jvminstaller.exe"
 		File ..\..\..\target_install\jvminstaller.exe
 		ReserveFile ..\..\..\target_install\jvminstaller.exe
 		DetailPrint "Installing JVM in $INSTDIR\java"
 		; on lance l'install en mode silencieux (/S), en forcant le path (/D)
 		ExecWait '"$INSTDIR\java\jvminstaller.exe" /S /D=$INSTDIR\java' $R9
 		${If} $R9 != 0
-			LogText "Unable to install JVM (error code is  : $R9)"
 			MessageBox MB_ABORTRETRYIGNORE "Unable to install JVM (error code is  : $R9)" /SD IDABORT IDRETRY startjvminstall IDABORT abortinstall
 		${EndIf}
 		DetailPrint "JVM installed in $INSTDIR\java, return code : $R9"

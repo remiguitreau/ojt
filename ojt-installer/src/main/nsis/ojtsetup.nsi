@@ -127,7 +127,7 @@ SetDateSave on
 
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "License.txt"
+!insertmacro MUI_PAGE_LICENSE "license.txt"
 ;Page custom showInstallCodePage checkInstallCode
 ;!insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
@@ -211,33 +211,9 @@ Function preInstallCheck
 	; On force la désinstallation de la précédente version
 	ClearErrors
 
-	LogSet on
-	LogText "Installation started "
-	LogText "-------------------------------------------------"
-	LogText "System Informations"
-	LogText "-------------------------------------------------"
-	Logtext "   Locale  : $LANGUAGE (1031=GERMAN, 1033=ENGLISH, 1036=FRENCH)"
-	Logtext "   CmdLine : $CMDLINE"
-	LogText "   Version : ${VERSION}"
-	Logtext "   NSIS    : ${NSIS_VERSION}"
-	Logtext "   Paths"
-	Logtext "       OUTDIR       : $OUTDIR"
-	Logtext "       INSTDIR      : $INSTDIR"
-	Logtext "       EXEPATH      : $EXEPATH"
-	Logtext "       EXEFILE      : $EXEFILE"
-	Logtext "       DESKTOP      : $DESKTOP"
-	Logtext "       WINDIR       : $WINDIR"
-	Logtext "       SYSDIR       : $SYSDIR"
-	Logtext "       DOCUMENTS    : $DOCUMENTS"
-	Logtext "       APPDATA      : $APPDATA"
-	Logtext "       LOCALAPPDATA : $LOCALAPPDATA"
-	Logtext "       PROFILE      : $PROFILE"
-
-
 	DetailPrint "$(^CHECKING_INSTALL_PREREQUISITE)"
 
 	IfErrors 0 +4
-		LogText "Error after install check"
 		Abort "Error after install check"
 		Quit
 		
@@ -272,7 +248,7 @@ Section "!OJT" MainSection
 
 	DetailPrint "this message will show on the installation window 2"
 	
-	LogText "Installing OJT libs"
+	DetailPrint "Installing OJT libs"
 	SetOutPath "$INSTDIR\libs"
 	File /r ..\..\..\target\ojt-installer-${VERSION}-bin-release-windows\libs\*
 	
@@ -302,11 +278,9 @@ SectionEnd
 ;Section de vérification que l'installation s'est correctement déroulée
 Section "!Check" Check
 		DetailPrint "$(^CHECKING_INSTALLATION)"
-		LogText "Checking installation"
 
         ${If} ${Errors}
-       		LogText "ABORT : Some errors occured"
-            Abort "Some errors occured"
+       		Abort "Some errors occured"
         ${EndIf}
         
         DetailPrint "$(^CHECKING_INSTALLATION_SUCCESS)"
@@ -324,7 +298,6 @@ WriteINIStr "${FILENAME}.url" "InternetShortcut" "URL" "${URL}"
 
 ;Création des raccourcis dans le menu démarrer
 Section
-	LogText "Creating shortcuts in ${startmenu}..."
 	DetailPrint "$(^CREATING_SHORTCUTS)"
 	CreateDirectory "${startmenu}"
 	
@@ -386,7 +359,6 @@ FunctionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-	LogSet off
 	DetailPrint "Uninstallation started "
 	
 	; Suppr du service Windows (si il est enregistré ou démarré)
@@ -397,8 +369,6 @@ Section "Uninstall"
 	RmDir /r "$INSTDIR\bin"
 	RmDir /r "$INSTDIR\libs"
 	RmDir /r "$INSTDIR\LICENSES"
-	        
-	Delete "$INSTDIR\install.log"
 	
 	; On supprime la JVM
 	RmDir /r "$INSTDIR\java"
