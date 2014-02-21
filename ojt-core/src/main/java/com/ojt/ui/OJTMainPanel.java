@@ -4,8 +4,8 @@
 package com.ojt.ui;
 
 import com.ojt.OJTConfiguration;
-import com.ojt.process.AutoRegistrationProcess;
 import com.ojt.process.ProcessListener;
+import com.ojt.process.RegistrationProcess;
 import com.ojt.process.SortProcess;
 import com.ojt.process.SourceFileProcess;
 import com.ojt.process.WeighingAndSortProcess;
@@ -42,7 +42,7 @@ public class OJTMainPanel extends JPanel implements ConfigurationChangedListener
 
     private OjtButton weighingAndSortButton;
 
-    private OjtButton autoRegistrationButton;
+    private OjtButton registrationButton;
 
     public OJTMainPanel(final OJTFrame ojtFrame) {
         super();
@@ -125,15 +125,15 @@ public class OJTMainPanel extends JPanel implements ConfigurationChangedListener
         add(weighingAndSortButton, new GridBagConstraints(0, y++, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(10, 5, 10, 5), 0, 0));
 
-        autoRegistrationButton = new OjtButton("Enregistrement auto");
-        autoRegistrationButton.addActionListener(new ActionListener() {
+        registrationButton = new OjtButton("Inscriptions");
+        registrationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                startAutoRegistrationProcess();
+                startRegistrationProcess();
             }
         });
-        autoRegistrationButton.setPreferredSize(BUTTON_SIZE);
-        add(autoRegistrationButton, new GridBagConstraints(0, y++, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
+        registrationButton.setPreferredSize(BUTTON_SIZE);
+        add(registrationButton, new GridBagConstraints(0, y++, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
                 GridBagConstraints.NONE, new Insets(10, 5, 10, 5), 0, 0));
         configurationUpdated();
     }
@@ -154,8 +154,8 @@ public class OJTMainPanel extends JPanel implements ConfigurationChangedListener
         startProcess(new WeighingAndSortProcess(ojtFrame, ojtFrame.getBalanceDriver()));
     }
 
-    void startAutoRegistrationProcess() {
-        startProcess(new AutoRegistrationProcess(ojtFrame, ojtFrame.getBalanceDriver()));
+    void startRegistrationProcess() {
+        startProcess(new RegistrationProcess(ojtFrame, ojtFrame.getBalanceDriver()));
     }
 
     private void startProcess(final com.ojt.process.Process process) {
@@ -182,7 +182,7 @@ public class OJTMainPanel extends JPanel implements ConfigurationChangedListener
         sortButton.setVisible(OJTConfiguration.getInstance().getPropertyAsBoolean(OJTConfiguration.SORT_MENU));
         weighingAndSortButton.setVisible(OJTConfiguration.getInstance().getPropertyAsBoolean(
                 OJTConfiguration.WEIGHING_AND_SORT_MENU));
-        autoRegistrationButton.setVisible(OJTConfiguration.getInstance().getPropertyAsBoolean(
-                OJTConfiguration.AUTO_REGISTRATION_MENU));
+        registrationButton.setVisible(OJTConfiguration.getInstance().getPropertyAsBoolean(
+                OJTConfiguration.REGISTRATION_MENU));
     }
 }

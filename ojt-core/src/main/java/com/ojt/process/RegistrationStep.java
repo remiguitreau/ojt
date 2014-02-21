@@ -10,16 +10,16 @@ import org.apache.log4j.Logger;
 import com.ojt.OjtConstants;
 import com.ojt.dao.CompetitorsDaoFactory;
 import com.ojt.tools.FileNameComposer;
-import com.ojt.ui.AutoRegistrationPanel;
+import com.ojt.ui.RegistrationPanel;
 
 import java.io.File;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
-public class AutoRegistrationStep extends AbstractStep {
+public class RegistrationStep extends AbstractStep {
 
-    private AutoRegistrationPanel stepPanel;
+    private RegistrationPanel stepPanel;
 
     private CompetitionDatas competitionDatas;
 
@@ -27,7 +27,7 @@ public class AutoRegistrationStep extends AbstractStep {
 
     File autoPersistFile = null;
 
-    public AutoRegistrationStep() {
+    public RegistrationStep() {
         initStepPanel();
     }
 
@@ -100,6 +100,6 @@ public class AutoRegistrationStep extends AbstractStep {
     // Privées
     // ---------------------------------------------------------
     private void initStepPanel() {
-        stepPanel = new AutoRegistrationPanel();
+        stepPanel = new RegistrationPanel();
     }
 }

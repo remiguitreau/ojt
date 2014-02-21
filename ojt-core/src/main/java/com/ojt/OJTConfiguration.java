@@ -45,7 +45,7 @@ public class OJTConfiguration {
 
     private static final String DEFAULT_WEIGHING_AND_SORT_MENU = Boolean.TRUE.toString();
 
-    private static final String DEFAULT_AUTO_REGISTRATION_MENU = Boolean.TRUE.toString();
+    private static final String DEFAULT_REGISTRATION_MENU = Boolean.TRUE.toString();
 
     private static final String DEFAULT_COMPETITION_CATEGORIES = "";
 
@@ -78,7 +78,7 @@ public class OJTConfiguration {
 
     public static final String WEIGHING_AND_SORT_MENU = "WeighingAndSortMenu";
 
-    public static final String AUTO_REGISTRATION_MENU = "AutoRegistrationMenu";
+    public static final String REGISTRATION_MENU = "RegistrationMenu";
 
     public static final String COMPETITION_CATEGORIES = "CompetitionCategories";
 
@@ -204,7 +204,7 @@ public class OJTConfiguration {
         props.put(WEIGHING_MENU, DEFAULT_WEIGHING_MENU);
         props.put(SORT_MENU, DEFAULT_SORT_MENU);
         props.put(WEIGHING_AND_SORT_MENU, DEFAULT_WEIGHING_AND_SORT_MENU);
-        props.put(AUTO_REGISTRATION_MENU, DEFAULT_AUTO_REGISTRATION_MENU);
+        props.put(REGISTRATION_MENU, DEFAULT_REGISTRATION_MENU);
         props.put(COMPETITION_CATEGORIES, DEFAULT_COMPETITION_CATEGORIES);
         storeConfiguration();
     }
@@ -259,8 +259,8 @@ public class OJTConfiguration {
             props.put(WEIGHING_AND_SORT_MENU, DEFAULT_WEIGHING_AND_SORT_MENU);
             configOK = false;
         }
-        if (getProperty(AUTO_REGISTRATION_MENU) == null) {
-            props.put(AUTO_REGISTRATION_MENU, DEFAULT_AUTO_REGISTRATION_MENU);
+        if (getProperty(REGISTRATION_MENU) == null) {
+            props.put(REGISTRATION_MENU, DEFAULT_REGISTRATION_MENU);
             configOK = false;
         }
         if (getProperty(COMPETITION_CATEGORIES) == null) {

@@ -84,7 +84,7 @@ public class ConfigurationDialog extends JDialog {
 
     private JCheckBox chkBoxWeighingAndSort;
 
-    private JCheckBox chkBoxAutoRegistration;
+    // private JCheckBox chkBoxRegistration;
 
     // -------------------------------------------------------------------------
     // Constructeur
@@ -405,11 +405,12 @@ public class ConfigurationDialog extends JDialog {
         chkBoxWeighingAndSort.setSelected(OJTConfiguration.getInstance().getPropertyAsBoolean(
                 OJTConfiguration.WEIGHING_AND_SORT_MENU));
 
-        chkBoxAutoRegistration = new JCheckBox("Enregistrement automatique");
-        add(chkBoxAutoRegistration, new GridBagConstraints(0, y++, 1, 1, 0, 0, GridBagConstraints.WEST,
-                GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-        chkBoxAutoRegistration.setSelected(OJTConfiguration.getInstance().getPropertyAsBoolean(
-                OJTConfiguration.AUTO_REGISTRATION_MENU));
+        // chkBoxRegistration = new JCheckBox("Inscription");
+        // add(chkBoxRegistration, new GridBagConstraints(0, y++, 1, 1, 0, 0,
+        // GridBagConstraints.WEST,
+        // GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+        // chkBoxRegistration.setSelected(OJTConfiguration.getInstance().getPropertyAsBoolean(
+        // OJTConfiguration.REGISTRATION_MENU));
 
         return y;
     }
@@ -446,8 +447,9 @@ public class ConfigurationDialog extends JDialog {
                 chkBoxSort.isSelected() ? Boolean.TRUE.toString() : Boolean.FALSE.toString());
         OJTConfiguration.getInstance().updateProperty(OJTConfiguration.WEIGHING_AND_SORT_MENU,
                 chkBoxWeighingAndSort.isSelected() ? Boolean.TRUE.toString() : Boolean.FALSE.toString());
-        OJTConfiguration.getInstance().updateProperty(OJTConfiguration.AUTO_REGISTRATION_MENU,
-                chkBoxAutoRegistration.isSelected() ? Boolean.TRUE.toString() : Boolean.FALSE.toString());
+        // OJTConfiguration.getInstance().updateProperty(OJTConfiguration.REGISTRATION_MENU,
+        // chkBoxRegistration.isSelected() ? Boolean.TRUE.toString() :
+        // Boolean.FALSE.toString());
         fireAvailableMenusChanged();
         dispose();
         if (((String) serialPortComboBox.getSelectedItem()).equals(OJTConfiguration.getInstance().getProperty(

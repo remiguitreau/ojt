@@ -24,21 +24,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-/**
- * Fenetre permettant de sélectionner un compétiteur et de modifier son poids
- * @author CDa
- * @since 18 janv. 2009 (CDa) : Création
- * @since 09 aout 2009 (CDa) : possibilité d'ajouter un compétiteur à la volée
- */
-public final class AutoRegistrationPanel extends JPanel {
+public final class OldRegistrationPanel extends JPanel {
 
     // -------------------------------------------------------------------------
     // Constantes
     // -------------------------------------------------------------------------
 
     private final static String ADD_COMPETITOR_BUTTON = "Nouveau compétiteur";
-
-    private final static String IMPORT_COMPETITOR_LIST_BUTTON = "Importer une pesée";
 
     // -------------------------------------------------------------------------
     // Propriétés de l'objet
@@ -64,7 +56,7 @@ public final class AutoRegistrationPanel extends JPanel {
 
     private CompetitorsDao registeredCompetitorsDao;
 
-    public AutoRegistrationPanel() {
+    public OldRegistrationPanel() {
         buildGui();
     }
 

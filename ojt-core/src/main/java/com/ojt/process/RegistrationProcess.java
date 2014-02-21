@@ -12,11 +12,11 @@ import javax.swing.JFrame;
  * @author Rémi "DwarfConan" Guitreau
  * @since 17 oct. 2009 : Création
  */
-public class AutoRegistrationProcess extends AbstractProcess {
+public class RegistrationProcess extends AbstractProcess {
 
     private final BalanceDriver balanceDriver;
 
-    public AutoRegistrationProcess(final JFrame processFrame, final BalanceDriver balanceDriver) {
+    public RegistrationProcess(final JFrame processFrame, final BalanceDriver balanceDriver) {
         super(processFrame);
 
         this.balanceDriver = balanceDriver;
@@ -26,7 +26,7 @@ public class AutoRegistrationProcess extends AbstractProcess {
     protected void initSteps() {
         addStep(new CompetitionInformationStep(CompetitionInformationStep.ONLY_WEIGHING));
         addStep(new PersistancyCreationStep());
-        addStep(new AutoRegistrationStep());
+        addStep(new RegistrationStep());
         addStep(new WeighingExportStep());
     }
 
