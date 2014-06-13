@@ -31,4 +31,6 @@ public interface OjtConstants {
     // final ImageIcon SOURCEFORGE_150x17 = new
     // ImageIcon(OjtConstants.class.getResource("sourceforge.net_150x17.png"));
     final ImageIcon GITHUB_LOGO = new ImageIcon(OjtConstants.class.getResource("github.png"));
+
+    String ENCODING = "ISO-8859-1";
 }
