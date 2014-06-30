@@ -24,7 +24,7 @@ public class RegistrationProcess extends AbstractProcess {
 
     @Override
     protected void initSteps() {
-        addStep(new CompetitionInformationStep(CompetitionInformationStep.ONLY_WEIGHING));
+        addStep(new CompetitionInformationStep(CompetitionInformationStep.ONLY_WEIGHING, getProcessFrame()));
         addStep(new PersistancyCreationStep());
         addStep(new RegistrationStep());
         addStep(new WeighingExportStep());

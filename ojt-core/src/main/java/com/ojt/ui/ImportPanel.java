@@ -221,7 +221,7 @@ public class ImportPanel extends JPanel {
 
         openOldFile = new OjtButton(openOldFileButtonLabel);
         openOldFile.setPreferredSize(BUTTON_SIZE);
-        openOldFile.addActionListener(createOldFileActionListener(openFolder));
+        openOldFile.addActionListener(createOldFileActionListener(openFolder, true));
     }
 
     private void initWeighingPostComponents(final boolean editable) {
@@ -229,10 +229,11 @@ public class ImportPanel extends JPanel {
 
         openOldFile = new OjtButton("Ouvrir");
         openOldFile.setPreferredSize(BUTTON_SIZE);
-        openOldFile.addActionListener(createOldFileActionListener(OjtConstants.SOURCE_DIRECTORY));
+        openOldFile.addActionListener(createOldFileActionListener(OjtConstants.SOURCE_DIRECTORY, true));
     }
 
-    private ActionListener createOldFileActionListener(final File folderName) {
+    private ActionListener createOldFileActionListener(final File folderName,
+            final boolean warnIfBadFormatFileName) {
         return new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -261,9 +262,11 @@ public class ImportPanel extends JPanel {
                         ImportPanel.this.displayCompetitorDescriptor(FileNameComposer.decomposeFileName(selectedFile.getName()));
                     } catch (final Exception ex) {
                         logger.error(ex);
-                        showErrorDialog("Mauvais format du nom de fichier : "
-                                + selectedFile.getName()
-                                + "\n\nFormat attendu : [<catégorie>-]<nom_manifestation>-<lieu>-<date>....[xls|dat]\n(Exemple de date : 15.10.2009");
+                        if (warnIfBadFormatFileName) {
+                            showErrorDialog("Mauvais format du nom de fichier : "
+                                    + selectedFile.getName()
+                                    + "\n\nFormat attendu : [<catégorie>-]<nom_manifestation>-<lieu>-<date>....[xls|dat]\n(Exemple de date : 15.10.2009");
+                        }
                     }
                     checkCompetitionInformation();
                     logger.info("You chose to open this file: " + selectedFile.getName());
@@ -341,35 +344,26 @@ public class ImportPanel extends JPanel {
 
         chooseButton = new OjtButton("Ouvrir");
         chooseButton.setPreferredSize(BUTTON_SIZE);
-        chooseButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                final JFileChooser fileChooser = new JFileChooser(OjtConstants.SOURCE_DIRECTORY);
-                fileChooser.setFileFilter(new FileFilter() {
-                    @Override
-                    public boolean accept(final File f) {
-                        return f.isDirectory() || f.getName().endsWith(".xls")
-                                || f.getName().endsWith(".dat");
-                    }
-
-                    @Override
-                    public String getDescription() {
-                        return "Fichier source";
-                    }
-
-                });
-
-                final int returnVal = fileChooser.showOpenDialog(ImportPanel.this);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    ImportPanel.this.fileField.setText(fileChooser.getSelectedFile().getName());
-                    ImportPanel.this.competitionFile = fileChooser.getSelectedFile();
-                    checkCompetitionInformation();
-                    logger.info("You chose to open this file: " + fileChooser.getSelectedFile().getName());
-                }
-            }
-
-        });
+        chooseButton.addActionListener(createOldFileActionListener(OjtConstants.SOURCE_DIRECTORY, false));
+        /*
+         * chooseButton.addActionListener(new ActionListener() {
+         * @Override public void actionPerformed(final ActionEvent e) { final
+         * JFileChooser fileChooser = new
+         * JFileChooser(OjtConstants.SOURCE_DIRECTORY);
+         * fileChooser.setFileFilter(new FileFilter() {
+         * @Override public boolean accept(final File f) { return
+         * f.isDirectory() || f.getName().endsWith(".xls") ||
+         * f.getName().endsWith(".dat"); }
+         * @Override public String getDescription() { return "Fichier source"; }
+         * }); final int returnVal =
+         * fileChooser.showOpenDialog(ImportPanel.this); if (returnVal ==
+         * JFileChooser.APPROVE_OPTION) {
+         * ImportPanel.this.fileField.setText(fileChooser
+         * .getSelectedFile().getName()); ImportPanel.this.competitionFile =
+         * fileChooser.getSelectedFile(); checkCompetitionInformation();
+         * logger.info("You chose to open this file: " +
+         * fileChooser.getSelectedFile().getName()); } } });
+         */
     }
 
     private void buildSortPostGui(final boolean withWeighingPost) {

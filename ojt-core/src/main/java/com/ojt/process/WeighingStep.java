@@ -14,6 +14,7 @@ import java.awt.Dimension;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -26,100 +27,105 @@ import javax.swing.SwingUtilities;
  */
 public class WeighingStep extends AbstractStep {
 
-	private CompetitorWeightEditorPanel stepPanel;
+    private CompetitorWeightEditorPanel stepPanel;
 
-	private final BalanceDriver balanceDriver;
+    private final BalanceDriver balanceDriver;
 
-	private final boolean enableWeighingImport;
+    private final boolean enableWeighingImport;
 
-	private CompetitionDatas competitionDatas;
+    private CompetitionDatas competitionDatas;
 
-	private final Logger logger = Logger.getLogger(getClass());
+    private final Logger logger = Logger.getLogger(getClass());
 
-	public WeighingStep(final boolean enableWeighingImport, final BalanceDriver balanceDriver) {
-		super();
+    private final JFrame ojtFrame;
 
-		this.enableWeighingImport = enableWeighingImport;
-		this.balanceDriver = balanceDriver;
-		initStepPanel();
-	}
+    public WeighingStep(final boolean enableWeighingImport, final BalanceDriver balanceDriver,
+            final JFrame ojtFrame) {
+        super();
 
-	// ---------------------------------------------------------
-	// Implémentation de AbstractStep
-	// ---------------------------------------------------------
+        this.enableWeighingImport = enableWeighingImport;
+        this.balanceDriver = balanceDriver;
+        this.ojtFrame = ojtFrame;
+        initStepPanel();
+    }
 
-	@Override
-	public JComponent getStepComponent() {
-		return stepPanel;
-	}
+    // ---------------------------------------------------------
+    // Implémentation de AbstractStep
+    // ---------------------------------------------------------
 
-	@Override
-	public void process(final CompetitionDatas competDatas) {
-		this.competitionDatas = competDatas;
-		balanceDriver.addListener(stepPanel);
-		stepPanel.setCompetitionDescriptor(competDatas.getCompetitionDescriptor());
-		stepPanel.setCompetitorsDao(competDatas.getCompetitorsDao());
-		stepPanel.setCompetitorList(competDatas.getCompetitorsDao().retrieveCompetitors());
-		stepPanel.fillClubList();
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				stepPanel.fillTable();
-				stepPanel.setVisible(true);
-				stepPanel.setFocusOnFieldSearch();
-				stepFinish();
-			}
-		});
-	}
+    @Override
+    public JComponent getStepComponent() {
+        return stepPanel;
+    }
 
-	@Override
-	public boolean finalizeStep() {
-		// 30.10.2009 (FMo) : ajout d'une prop de config pour savoir si on
-		// affiche le dialogue ou pas
-		if (OJTConfiguration.getInstance().getPropertyAsBoolean(OJTConfiguration.SHOW_WARN_ON_EMPTY_WEIGHT,
-				true)) {
-			if (!stepPanel.getUnvalidCompetitors().isEmpty()) {
-				switch (JOptionPane.showOptionDialog(null,
-						"Tous les compétiteurs n'ont pas leur poids renseigné", "OJT",
-						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {
-								"Voir les compétiteurs sans poids", "Annuler", "Poursuivre quand même" },
-						"Poursuivre quand même")) {
-					case 0:
-						final JList list = new JList();
-						final DefaultListModel model = new DefaultListModel();
-						for (final Competitor comp : stepPanel.getUnvalidCompetitors()) {
-							model.addElement(comp.getDisplayName() + " [" + comp.getClub() + "]");
-						}
-						list.setModel(model);
-						final JScrollPane scrollPane = new JScrollPane();
-						scrollPane.setViewportView(list);
-						scrollPane.setPreferredSize(new Dimension(500, 500));
-						JOptionPane.showMessageDialog(null, scrollPane, "Compétiteurs sans poids",
-								JOptionPane.INFORMATION_MESSAGE);
-						return finalizeStep();
-					case 1:
-						return false;
-					case 2:
-						competitionDatas.setValidCompetitors(stepPanel.getValidCompetitors());
-						return true;
-					default:
-						return false;
-				}
-			}
-		}
-		competitionDatas.setValidCompetitors(stepPanel.getValidCompetitors());
-		return true;
-	}
+    @Override
+    public void process(final CompetitionDatas competDatas) {
+        this.competitionDatas = competDatas;
+        balanceDriver.addListener(stepPanel);
+        stepPanel.setCompetitionDescriptor(competDatas.getCompetitionDescriptor());
+        stepPanel.setCompetitorsDao(competDatas.getCompetitorsDao());
+        stepPanel.setCompetitorList(competDatas.getCompetitorsDao().retrieveCompetitors());
+        stepPanel.fillClubList();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                ojtFrame.setTitle(competDatas.getCompetitionDescriptor().getCompetitionName() + " - OJT");
+                stepPanel.fillTable();
+                stepPanel.setVisible(true);
+                stepPanel.setFocusOnFieldSearch();
+                stepFinish();
+            }
+        });
+    }
 
-	@Override
-	public String getTitle() {
-		return "Pesée";
-	}
+    @Override
+    public boolean finalizeStep() {
+        // 30.10.2009 (FMo) : ajout d'une prop de config pour savoir si on
+        // affiche le dialogue ou pas
+        if (OJTConfiguration.getInstance().getPropertyAsBoolean(OJTConfiguration.SHOW_WARN_ON_EMPTY_WEIGHT,
+                true)) {
+            if (!stepPanel.getUnvalidCompetitors().isEmpty()) {
+                switch (JOptionPane.showOptionDialog(null,
+                        "Tous les compétiteurs n'ont pas leur poids renseigné", "OJT",
+                        JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {
+                                "Voir les compétiteurs sans poids", "Annuler", "Poursuivre quand même" },
+                        "Poursuivre quand même")) {
+                    case 0:
+                        final JList list = new JList();
+                        final DefaultListModel model = new DefaultListModel();
+                        for (final Competitor comp : stepPanel.getUnvalidCompetitors()) {
+                            model.addElement(comp.getDisplayName() + " [" + comp.getClub() + "]");
+                        }
+                        list.setModel(model);
+                        final JScrollPane scrollPane = new JScrollPane();
+                        scrollPane.setViewportView(list);
+                        scrollPane.setPreferredSize(new Dimension(500, 500));
+                        JOptionPane.showMessageDialog(null, scrollPane, "Compétiteurs sans poids",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        return finalizeStep();
+                    case 1:
+                        return false;
+                    case 2:
+                        competitionDatas.setValidCompetitors(stepPanel.getValidCompetitors());
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        }
+        competitionDatas.setValidCompetitors(stepPanel.getValidCompetitors());
+        return true;
+    }
 
-	// ---------------------------------------------------------
-	// Privées
-	// ---------------------------------------------------------
-	private void initStepPanel() {
-		stepPanel = new CompetitorWeightEditorPanel(enableWeighingImport);
-	}
+    @Override
+    public String getTitle() {
+        return "Pesée";
+    }
+
+    // ---------------------------------------------------------
+    // Privées
+    // ---------------------------------------------------------
+    private void initStepPanel() {
+        stepPanel = new CompetitorWeightEditorPanel(enableWeighingImport);
+    }
 }

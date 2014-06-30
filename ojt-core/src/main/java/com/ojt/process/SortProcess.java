@@ -14,22 +14,22 @@ import javax.swing.JFrame;
  */
 public class SortProcess extends AbstractProcess {
 
-	private final BalanceDriver balanceDriver;
+    private final BalanceDriver balanceDriver;
 
-	public SortProcess(final JFrame processFrame, final BalanceDriver balanceDriver) {
-		super(processFrame);
+    public SortProcess(final JFrame processFrame, final BalanceDriver balanceDriver) {
+        super(processFrame);
 
-		this.balanceDriver = balanceDriver;
-	}
+        this.balanceDriver = balanceDriver;
+    }
 
-	@Override
-	protected void initSteps() {
-		addStep(new CompetitionInformationStep(CompetitionInformationStep.ONLY_SORT));
-		addStep(new PersistancyCreationStep());
-		addStep(new WeighingStep(true, balanceDriver));
-		addStep(new CompetitorsGroupsCreationStep());
-		addStep(new GroupOrganizerStep());
-		addStep(new DiscardCompetitorsGroupStep());
-		addStep(new PouleExportStep());
-	}
+    @Override
+    protected void initSteps() {
+        addStep(new CompetitionInformationStep(CompetitionInformationStep.ONLY_SORT, getProcessFrame()));
+        addStep(new PersistancyCreationStep());
+        addStep(new WeighingStep(true, balanceDriver, getProcessFrame()));
+        addStep(new CompetitorsGroupsCreationStep());
+        addStep(new GroupOrganizerStep());
+        addStep(new DiscardCompetitorsGroupStep());
+        addStep(new PouleExportStep());
+    }
 }

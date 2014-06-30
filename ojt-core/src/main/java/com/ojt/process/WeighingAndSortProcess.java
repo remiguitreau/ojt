@@ -24,9 +24,10 @@ public class WeighingAndSortProcess extends AbstractProcess {
 
     @Override
     protected void initSteps() {
-        addStep(new CompetitionInformationStep(CompetitionInformationStep.WEIGHING_AND_SORT));
+        addStep(new CompetitionInformationStep(CompetitionInformationStep.WEIGHING_AND_SORT,
+                getProcessFrame()));
         addStep(new PersistancyCreationStep());
-        addStep(new WeighingStep(true, balanceDriver));
+        addStep(new WeighingStep(true, balanceDriver, getProcessFrame()));
         addStep(new CompetitorsGroupsCreationStep());
         addStep(new GroupOrganizerStep());
         addStep(new DiscardCompetitorsGroupStep());

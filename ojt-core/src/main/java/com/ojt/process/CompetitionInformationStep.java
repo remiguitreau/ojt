@@ -11,6 +11,7 @@ import com.ojt.ui.ImportPanel;
 import java.io.File;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
@@ -34,10 +35,13 @@ public class CompetitionInformationStep extends AbstractStep {
 
     private final int type;
 
-    public CompetitionInformationStep(final int type) {
+    private final JFrame ojtFrame;
+
+    public CompetitionInformationStep(final int type, final JFrame ojtFrame) {
         super();
 
         this.type = type;
+        this.ojtFrame = ojtFrame;
         initStepPanel();
     }
 
@@ -56,6 +60,7 @@ public class CompetitionInformationStep extends AbstractStep {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                ojtFrame.setTitle("Open Judo Tournament");
                 stepPanel.setCompetitionDescriptor(competDatas.getCompetitionDescriptor());
                 stepPanel.setVisible(true);
             }
@@ -100,7 +105,7 @@ public class CompetitionInformationStep extends AbstractStep {
     // Privées
     // ---------------------------------------------------------
     private void initStepPanel() {
-        stepPanel = new ImportPanel(this, (type == ONLY_WEIGHING) || (type == WEIGHING_AND_SORT),
-                (type == ONLY_SORT) || (type == WEIGHING_AND_SORT), type == SOURCE_CREATION);
+        stepPanel = new ImportPanel(this, type == ONLY_WEIGHING || type == WEIGHING_AND_SORT,
+                type == ONLY_SORT || type == WEIGHING_AND_SORT, type == SOURCE_CREATION);
     }
 }
