@@ -1,5 +1,6 @@
 package com.ojt.ui;
 
+import org.apache.log4j.Logger;
 import org.jdesktop.swingx.JXDatePicker;
 
 import com.ojt.AddCompetitorListener;
@@ -15,8 +16,12 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,6 +37,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicComboBoxEditor;
 
 /**
  * Formulaire de saisie d'un nouveau compétiteur
@@ -85,6 +91,8 @@ public class AddCompetitorDialog extends JDialog {
 
     private Map<String, Club> clubList;
 
+    private final Logger logger = Logger.getLogger(getClass());
+
     // -------------------------------------------------------------------------
     // Constructeurs
     // -------------------------------------------------------------------------
@@ -120,7 +128,7 @@ public class AddCompetitorDialog extends JDialog {
         setResizable(false);
         add(buildFormPanel(), BorderLayout.NORTH);
         add(buildButtonPanel(), BorderLayout.SOUTH);
-        setSize(300, 270);
+        setSize(600, 270);
 
         setLocationRelativeTo(getParent());
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -226,11 +234,43 @@ public class AddCompetitorDialog extends JDialog {
     }
 
     private Set<String> fillComboBoxWithClub() {
+        final List<String> clubsList = new ArrayList<String>();
+        clubsList.add(NEW_CLUB);
+        clubsList.addAll(getClubList().keySet());
         competitorClubNameComboBox = new JComboBox(new String[] { NEW_CLUB });
         final Set<String> clubNames = getClubList().keySet();
         for (final String clubName : clubNames) {
             competitorClubNameComboBox.addItem(clubName);
         }
+        // AutoCompleteDecorator.decorate(competitorClubNameComboBox);
+        competitorClubNameComboBox.setEditable(true);
+        ((JTextField) ((BasicComboBoxEditor) competitorClubNameComboBox.getEditor()).getEditorComponent()).addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(final FocusEvent e) {
+                ((JTextField) e.getSource()).selectAll();
+            }
+        });
+        ((JTextField) ((BasicComboBoxEditor) competitorClubNameComboBox.getEditor()).getEditorComponent()).addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(final KeyEvent e) {
+                if (Character.isLetterOrDigit(e.getKeyCode())) {
+                    final String pattern = ((JTextField) ((BasicComboBoxEditor) competitorClubNameComboBox.getEditor()).getEditorComponent()).getText().toUpperCase();
+                    logger.info("New pattern: " + pattern);
+                    competitorClubNameComboBox.hidePopup();
+                    competitorClubNameComboBox.removeAllItems();
+                    competitorClubNameComboBox.addItem(NEW_CLUB);
+                    for (final String clubName : clubNames) {
+                        if (clubName.toUpperCase().contains(pattern)) {
+                            logger.info("Adding " + clubName);
+                            competitorClubNameComboBox.addItem(clubName);
+                        }
+                    }
+                    competitorClubNameComboBox.setSelectedItem(pattern);
+                    competitorClubNameComboBox.showPopup();
+                }
+            }
+        });
         return clubNames;
     }
 
@@ -341,6 +381,9 @@ public class AddCompetitorDialog extends JDialog {
         final AddCompetitorDialog competitorFrame = new AddCompetitorDialog(null);
         final HashMap<String, Club> clubList2 = new HashMap<String, Club>();
         clubList2.put("club1", new Club());
+        clubList2.put("club2", new Club());
+        clubList2.put("club - Rhone", new Club());
+        clubList2.put("club - Corse", new Club());
         competitorFrame.setClubList(clubList2);
         competitorFrame.initFrame();
     }
