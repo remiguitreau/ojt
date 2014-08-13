@@ -68,9 +68,6 @@ public class FFJDACSVCompetitorsDaoTest {
         competitor.setWeight(null);
         dao.createCompetitor(competitor);
         final List<String> lines = FileUtils.readLines(testFile);
-        for (final String line : lines) {
-            /* xxx */System.out.println("rgu >> " + line);
-        }
         Assert.assertEquals(6, lines.size());
         Assert.assertEquals("LICENSE;;;NAME FIRST NAME;;;Club Name;23;;;;;;;;;;;;;", lines.get(5));
     }

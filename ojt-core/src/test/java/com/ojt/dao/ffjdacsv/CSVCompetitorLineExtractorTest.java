@@ -17,6 +17,7 @@ public class CSVCompetitorLineExtractorTest {
 
     @Before
     public void initTest() {
+        FFJDACSVConstants.clubs.clear();
         extractor = new CSVCompetitorLineExtractor();
     }
 

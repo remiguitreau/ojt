@@ -170,7 +170,7 @@ public class FFJDACSVCompetitorsDao implements CompetitorsDao {
                 }
             }
             if (competitorUpdated) {
-                FileUtils.writeLines(competitorsFile, lines);
+                FileUtils.writeLines(competitorsFile, OjtConstants.ENCODING, lines, null);
             }
         } catch (final Exception ex) {
             throw new CompetitorDeleteException(ex);

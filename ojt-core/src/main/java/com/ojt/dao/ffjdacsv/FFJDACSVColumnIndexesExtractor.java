@@ -30,9 +30,25 @@ public class FFJDACSVColumnIndexesExtractor {
     }
 
     private void checkColumnIndexesValidity(final FFJDACSVColumnsIndexes indexes) {
-        if (indexes.clubDepartmentIndex == -1 || indexes.clubNameIndex == -1 || indexes.fullNameIndex == -1
-                || indexes.licenseCodeIndex == -1 || indexes.weightIndex == -1) {
-            throw new FFJDACSVBadFormatException();
+        if (indexes.clubDepartmentIndex == -1) {
+            throw new FFJDACSVBadFormatException("'" + FFJDACSVConstants.CLUB_DEPARTMENT_IDENTIFIER
+                    + "' column missing");
+        }
+        if (indexes.clubNameIndex == -1) {
+            throw new FFJDACSVBadFormatException("'" + FFJDACSVConstants.CLUB_NAME_IDENTIFIER
+                    + "' column missing");
+        }
+        if (indexes.fullNameIndex == -1) {
+            throw new FFJDACSVBadFormatException("'" + FFJDACSVConstants.FULL_NAME_IDENTIFIER
+                    + "' column missing");
+        }
+        if (indexes.licenseCodeIndex == -1) {
+            throw new FFJDACSVBadFormatException("'" + FFJDACSVConstants.LICENSE_CODE_IDENTIFIER
+                    + "' column missing");
+        }
+        if (indexes.weightIndex == -1) {
+            throw new FFJDACSVBadFormatException("'" + FFJDACSVConstants.WEIGHT_IDENTIFIER
+                    + "' column missing");
         }
     }
 }
