@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import com.ojt.Competitor;
 import com.ojt.dao.ffjdacsv.FFJDACSVConstants.FFJDACSVDatas;
 
+import java.util.Arrays;
+
 class CSVCompetitorLineExtractor {
 
     private final Logger logger = Logger.getLogger(getClass());
@@ -14,8 +16,13 @@ class CSVCompetitorLineExtractor {
         checkEmptyDatas(datas);
         checkValidDatas(datas, columnIndexes);
         final Competitor competitor = new Competitor();
-        for (final FFJDACSVDatas data : FFJDACSVDatas.values()) {
-            data.completeCompetitorWithFFJDADatasLine(competitor, datas, columnIndexes);
+        try {
+            for (final FFJDACSVDatas data : FFJDACSVDatas.values()) {
+                data.completeCompetitorWithFFJDADatasLine(competitor, datas, columnIndexes);
+            }
+        } catch (final Exception ex) {
+            throw new CSVCompetitorLineExtractionException("Unable to extract competitor from line "
+                    + Arrays.toString(datas), ex);
         }
         return competitor;
     }

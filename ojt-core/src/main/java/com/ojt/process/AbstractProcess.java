@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.ojt.process;
 
@@ -187,6 +187,7 @@ public abstract class AbstractProcess implements Process, StepListener {
                             + currentStep.getTitle() + "' : "
                             + (ex.getCause() == null ? ex.getMessage() : ex.getCause().getMessage()),
                             "Erreur inatendue");
+                    logger.error("Bad file format:", ex);
                 } catch (final Exception ex) {
                     logger.error("Erreur inattendue lors du lancement d'une étape.", ex);
                     OJTLauncher.showError(

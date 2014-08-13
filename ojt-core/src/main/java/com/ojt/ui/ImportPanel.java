@@ -242,7 +242,7 @@ public class ImportPanel extends JPanel {
                     @Override
                     public boolean accept(final File f) {
                         return f.isDirectory() || f.getName().endsWith(".xls")
-                                || f.getName().endsWith(".dat");
+                                || f.getName().endsWith(".dat") || f.getName().endsWith(".csv");
                     }
 
                     @Override
@@ -353,7 +353,7 @@ public class ImportPanel extends JPanel {
          * fileChooser.setFileFilter(new FileFilter() {
          * @Override public boolean accept(final File f) { return
          * f.isDirectory() || f.getName().endsWith(".xls") ||
-         * f.getName().endsWith(".dat"); }
+         * f.getName().endsWith(".dat") || f.getName().endsWith(".csv"); }
          * @Override public String getDescription() { return "Fichier source"; }
          * }); final int returnVal =
          * fileChooser.showOpenDialog(ImportPanel.this); if (returnVal ==
